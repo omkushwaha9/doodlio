@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Rubik", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Inconsolata", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html,
+  body {
+    font-family: "Rubik", var(--font-sans);
+    background-color: #124da5;
+    color: #ffffff;
+  }
+
+  button:not(:disabled),
+  a[href],
+  select:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+.skribbl-bg {
+  background-color: #124da5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%230c3a82' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' opacity='0.55'%3E%3Cpath d='M22 30l12-12 6 6-12 12-8 2z'/%3E%3Ccircle cx='90' cy='28' r='11'/%3E%3Cpath d='M86 26h.01M94 26h.01M86 32c2.5 2 5.5 2 8 0'/%3E%3Cpath d='M138 22h18l-2 10c-1 5-13 5-14 0zM147 35v8M141 43h12'/%3E%3Cpath d='M28 88c0-7 16-7 16 0v10H28zM24 98h24'/%3E%3Crect x='76' y='74' width='26' height='18' rx='4'/%3E%3Ccircle cx='82' cy='95' r='4'/%3E%3Ccircle cx='96' cy='95' r='4'/%3E%3Cpath d='M132 82l14-10 14 10v16h-28z'/%3E%3Cpath d='M142 98v-8h8v8'/%3E%3Cpath d='M22 142c8-8 18-8 24 0-6 8-16 8-24 0zM46 142l8-6v12z'/%3E%3Ccircle cx='92' cy='144' r='10'/%3E%3Cpath d='M92 128v4M92 156v4M76 144h4M104 144h4M81 133l3 3M100 152l3 3M103 133l-3 3M84 152l-3 3'/%3E%3Cpath d='M140 135c6-7 18-3 16 7-1 6-8 10-16 14-8-4-15-8-16-14-2-10 10-14 16-7z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
