@@ -1,86 +1,72 @@
+
 # Deployment Guide
 
-## Recommended: Render Web Service
+## Production Environment
 
-Doodlio serves its React build and Socket.IO backend from one Express server. Deploying both together avoids cross-origin configuration for the standard setup.
+Doodlio is deployed using Render.
 
-### Before deploying
+**Live Application:** https://doodlio-lwhd.onrender.com/
 
-1. Confirm the project installs locally with `npm install`.
-2. Run `npm run lint`, `npm test`, and `npm run build`.
-3. Push the project to a Git repository.
-4. Confirm that `render.yaml` is at the repository root.
+**Repository:** https://github.com/omkushwaha9/doodlio
 
-### Deploy with Blueprint
+## Deployment Configuration
 
-1. Open the Render dashboard.
-2. Select **New → Blueprint**.
-3. Connect the repository.
-4. Render reads `render.yaml`.
-5. Create the service and wait for deployment.
+The application uses a Node.js server with an Express backend and Socket.IO communication.
 
-The included Blueprint configures:
+### Build Command
 
-| Setting | Value |
+```bash
+npm install && npm run build
+```
+
+### Start Command
+
+```bash
+npm start
+```
+
+### Node.js Version
+
+The project requires Node.js >= 22.12.0.
+
+## Environment Variables
+
+Check the server configuration before adding environment variables.
+
+| Variable | Purpose |
 |---|---|
-| Service type | Web Service |
-| Runtime | Node |
-| Build | `npm install && npm run build` |
-| Start | `npm start` |
-| Health check | `/api/health` |
-| Environment | `NODE_ENV=production` |
+| `PORT` | Port used by the server |
+| `NODE_ENV` | Application environment |
 
-Render assigns `PORT` automatically. `server.ts` reads `process.env.PORT`.
+Only add variables that the application actually reads.
 
-### Verify the deployment
+## Deployment Steps
 
-Open `https://<service-name>.onrender.com/api/health`. A healthy response should be JSON with `ok: true`.
+1. Push the latest changes to GitHub.
+2. Open the Doodlio service in Render.
+3. Confirm the repository is connected.
+4. Verify the build command.
+5. Verify the start command.
+6. Trigger a deployment.
+7. Check the deployment logs.
+8. Open the production URL.
+9. Test room creation, joining, drawing, guessing, and scoring.
 
-Then test the game from two different browser sessions:
+## Production Verification
 
-1. Create a room in browser A.
-2. Join that room from browser B.
-3. Start the game.
-4. Select a word as drawer.
-5. Draw several strokes and confirm browser B receives them.
-6. Submit a correct guess from browser B.
-7. Confirm scores and round progression update on both browsers.
-8. Complete a game and confirm the final leaderboard.
+After deployment, verify:
 
-Do not submit a deployment URL until this test passes.
+- The homepage loads successfully.
+- Multiple players can connect.
+- Room creation and joining work.
+- Drawing updates synchronize.
+- Guess submissions are processed.
+- Scores update correctly.
+- Round transitions work.
+- The game can finish correctly.
 
-## Railway
+## Important Notes
 
-Create a Node service from the repository:
+The deployed application should be tested independently from the local development environment.
 
-- Build command: `npm install && npm run build`
-- Start command: `npm start`
-- Environment variable: `NODE_ENV=production`
-- Expose the service's HTTP port and enable a public domain.
-
-The app reads the platform-provided `PORT`.
-
-## Vercel / Netlify
-
-These are primarily frontend platforms. The app's Socket.IO server must run on a separate persistent Node host. If splitting the deployment:
-
-- Set the client to connect to the backend's public URL.
-- Configure explicit CORS origins on the backend.
-- Use HTTPS/WSS.
-- Verify WebSocket upgrade and fallback behavior.
-- Do not assume a serverless function can host a long-lived Socket.IO server.
-
-## Production checklist
-
-- [ ] `npm install` completes.
-- [ ] `npm run lint` completes.
-- [ ] `npm test` completes.
-- [ ] `npm run build` completes.
-- [ ] `/api/health` responds successfully.
-- [ ] Public room list endpoint responds.
-- [ ] Create/join room works from separate browsers.
-- [ ] Drawing sync works.
-- [ ] Guess and score flow works.
-- [ ] Round timer and next drawer work.
-- [ ] Game-over leaderboard works.
-- [ ] README contains the real public URL.
+A successful build does not automatically guarantee that multiplayer functionality works correctly in production.
